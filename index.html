@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/stylesheet.css">
+</head>
+<body>
+    <!-- header section begins  -->
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <!-- header section ends -->
+
+    <!-- main section begins  -->
+    <main>
+        <section id="side-navigation">
+            <h2>Search for a city (todays / date)</h2>
+            <form>
+                <input type="text">
+                <button type="submit" id="search-for-a-city">Search</button>
+            </form>
+            <hr>
+            <ul id="search-history-list">
+            </ul>
+            <button>Clear Search History</button>
+        </section>
+        <section id="weather-content">
+            <article id="current-weather">
+                <h3 id="city-name"></h3>
+                <ul id="current-weather-ul">
+                    <li data-current="temp :"></li>
+                    <li data-current="wind :"></li>
+                    <li data-current="humidity :"></li>
+                    <li data-current="UVindex :"></li>
+                </ul>
+            </article>
+            <hr>
+            <!-- will be a flex with the cards inside being calc(100% / 5 - 25px) -->
+            <article id="weather-forecast"> 
+                <figure class="forecast-cards">
+                    <p></p>
+                    <img src="" alt="">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </figure>
+                <figure class="forecast-cards">
+                    <p></p>
+                    <img src="" alt="">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </figure>
+                <figure class="forecast-cards">
+                    <p></p>
+                    <img src="" alt="">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </figure>
+                <figure class="forecast-cards">
+                    <p></p>
+                    <img src="" alt="">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </figure>
+                <figure class="forecast-cards">
+                    <p></p>
+                    <img src="" alt="">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </figure>
+            </article>
+        </section>
+    </main>
+    <!-- main section ends  -->
+
+    <!-- footer section begins  -->
+    <footer>
+
+    </footer>
+    <!-- footer section ends  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="./assets/js/weather-dashboard.js"></script>
+</body>
+</html>
+
+<!-- 
+    to do's 
+    1. Make the logic for the search
+        user is able to search a city and see the future forecasts for that area
+    2. user needs to be presented with 
+        City name, Date, Icon representing the weather conditions, temperature, humidity
+        wind speed and the UV index
+    3. When the user views the UV index The user is presented with
+        a color that indicates whether the conditions are favorable, moderate, or severe
+    4. When i view future weather conditions for that city the user is presented with 
+        a 5 day forecast that displays the date, icon, temperature, wind speed, and humidity
+    5. When i click on a city in the search history then the user is presented with
+        current and future conditions for that city (LOCALSTORAGE) 
+-->
+
