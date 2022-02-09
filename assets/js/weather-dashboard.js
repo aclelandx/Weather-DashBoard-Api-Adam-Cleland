@@ -14,6 +14,7 @@ const $currentTemp = $currentWeatherUl.children[0];
 const $currentWind = $currentWeatherUl.children[1];
 const $currentHumidity = $currentWeatherUl.children[2];
 const $currentUVindex = $currentWeatherUl.children[3];
+const $currentIcon = document.getElementById(`current-icon`);
 
 const $forecastCards = document.querySelectorAll(`.forecast-cards`);
 
@@ -95,6 +96,7 @@ function weatherSearchPt2() {
         .then(function (data) {
             console.log(data);
             $currentTemp.innerHTML = `Current Temperature : ${data.current.temp} Degrees`;
+            $currentIcon.setAttribute(`src`, `http://openweathermap.org/img/w/${data.current.weather[0].icon}.png`)
             $currentWind.innerHTML = `Current Wind Speed : ${data.current.wind_speed} MPH`;
             $currentHumidity.innerHTML = `Current Humidity : ${data.current.humidity}%`;
             $currentUVindex.innerHTML = `Current uvINDEX : ${data.current.uvi}`;
