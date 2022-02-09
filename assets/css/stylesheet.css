@@ -118,6 +118,7 @@ main #side-navigation ul li {
   padding: 10px;
   background-color: coral;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 #side-navigation > button {

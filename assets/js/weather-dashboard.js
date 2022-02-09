@@ -27,13 +27,33 @@ if (window.localStorage.getItem(`history`) === null) {
     window.localStorage.setItem(`history`, lSGrab)
 }
 
-$searchForm.children[0].value = `Columbus`
+addHistoryData()
 
 function searchHistoryData(input) {
     let lSUpdate = JSON.parse(window.localStorage.getItem(`history`));
     lSUpdate.push(input);
     let lSGrab = JSON.stringify(lSUpdate);
     window.localStorage.setItem(`history`, lSGrab);
+}
+
+function addHistoryData() {
+    $searchHistoryUl.innerHTML = ``;
+    let lSUpdate = JSON.parse(window.localStorage.getItem(`history`))
+    for (let i = 0; i < lSUpdate.length; i++) {
+        let newLi = document.createElement(`li`);
+        newLi.textContent = lSUpdate[i];
+        newLi.addEventListener(`click`, pastInput)
+        $searchHistoryUl.appendChild(newLi);
+    }
+    let lSGrab = JSON.stringify(lSUpdate);
+    window.localStorage.setItem(`history`, lSGrab)
+}
+
+function pastInput(e) {
+    let target = e.target;
+    $searchForm.children[0].value = target.textContent;
+    weatherSearch(e);
+    target.remove();
 }
 
 // function that plays when the information is input into the text field.
@@ -52,6 +72,7 @@ function weatherSearch(e) {
         })
         .then(function (data) {
             if (data.cod >= 400) {
+                $currentName.textContent = `INVALID INPUT`;
                 return;
             }
             searchHistoryData(currentSearch);
@@ -72,7 +93,24 @@ function weatherSearchPt2() {
             return response.json();
         })
         .then(function (data) {
+            console.log(data);
+            $currentTemp.innerHTML = `Current Temperature : ${data.current.temp} Degrees`;
+            $currentWind.innerHTML = `Current Wind Speed : ${data.current.wind_speed} MPH`;
+            $currentHumidity.innerHTML = `Current Humidity : ${data.current.humidity}%`;
+            $currentUVindex.innerHTML = `Current uvINDEX : ${data.current.uvi}`;
+            if (data.current.uvi < 3) {
+                $currentUVindex.style = `background-color:#a7d6a3;`;
+            } else if (data.current.uvi >= 3 && data.current.uvi < 6) {
+                $currentUVindex.style = `background-color:#efea43;`;
+            } else if (data.current.uvi >= 6 && data.current.uvi < 8) {
+                $currentUVindex.style = `background-color:#f47b3d;`;
+            } else if (data.current.uvi >= 8 && data.current.uvi < 11) {
+                $currentUVindex.style = `background-color:#ef3e2d;`;
+            } else if (data.current.uvi >= 11) {
+                $currentUVindex.style = `background-color:#ec008c;`;
+            }
             weatherForLoop(data);
+            addHistoryData()
         })
 }
 
@@ -92,13 +130,3 @@ $clearHistory.addEventListener(`click`, function () {
     window.localStorage.clear();
     document.location.reload();
 })
-
-
-
-
-        // $currentTemp.innerHTML = `${$currentTemp.getAttribute(`data-current`)} ${data.main.temp}`
-        // $currentWind.innerHTML = `${$currentWind.getAttribute(`data-current`)} ${data.main.temp}`
-        // $currentHumidity.innerHTML = `${$currentHumidity.getAttribute(`data-current`)} ${data.main.temp}`
-        // $currentUVindex.innerHTML = `${$currentUVindex.getAttribute(`data-current`)} ${data.main.temp}`
-
-
