@@ -1,10 +1,9 @@
-
-
 const $sideNav = document.getElementById(`side-navigation`);
 
 const $searchForm = document.querySelector(`form`);
 const $searchButton = document.getElementById(`search-for-a-city`);
 const $searchHistoryUl = document.getElementById(`search-history-list`);
+const $clearHistory = document.getElementById(`clear`);
 
 const $weatherContentSection = document.getElementById(`weather-content`);
 
@@ -18,33 +17,44 @@ const $currentUVindex = $currentWeatherUl.children[3];
 
 const $forecastCards = document.querySelectorAll(`.forecast-cards`);
 
+let currentSearch = ``;
+
 let currentLat = ``;
 let currentLon = ``;
 
-let searchHistoryArray = [];
+if (window.localStorage.getItem(`history`) === null) {
+    let lSGrab = JSON.stringify([]);
+    window.localStorage.setItem(`history`, lSGrab)
+}
 
 $searchForm.children[0].value = `Columbus`
 
-function searchHistoryData() {
-
+function searchHistoryData(input) {
+    let lSUpdate = JSON.parse(window.localStorage.getItem(`history`));
+    lSUpdate.push(input);
+    let lSGrab = JSON.stringify(lSUpdate);
+    window.localStorage.setItem(`history`, lSGrab);
 }
 
 // function that plays when the information is input into the text field.
 function weatherSearch(e) {
     e.preventDefault();
-    let currentSearch = $searchForm.children[0].value.trim()
+    currentSearch = $searchForm.children[0].value.trim();
     if (currentSearch === ``) {
         $currentName.textContent = 'That input is invalid.';
         return;
     }
 
     let openWeatherSearch = 'https://api.openweathermap.org/data/2.5/weather?q=' + currentSearch + '&units=imperial&APPID=4ba263fc479a8029bd0bd9180e26bba2';
-
     fetch(openWeatherSearch)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
+            if (data.cod >= 400) {
+                return;
+            }
+            searchHistoryData(currentSearch);
             console.log(data);
             currentLat = data.coord.lat;
             currentLon = data.coord.lon;
@@ -77,6 +87,11 @@ function weatherForLoop(d) {
 }
 
 $searchButton.addEventListener(`click`, weatherSearch);
+
+$clearHistory.addEventListener(`click`, function () {
+    window.localStorage.clear();
+    document.location.reload();
+})
 
 
 
