@@ -52,8 +52,8 @@ function addHistoryData() {
 function pastInput(e) {
     let target = e.target;
     $searchForm.children[0].value = target.textContent;
+    currentSearch = $searchForm.children[0].value.trim();
     weatherSearch(e);
-    target.remove();
 }
 
 // function that plays when the information is input into the text field.
